@@ -1,16 +1,20 @@
+const catchThread = require('catch-thread');
+const AppError = require('ap-err');
+const ApEzFeature = require('ap-ez');
+
 //* GET ALL
 exports.getAll = (Model) =>
-  catchAsync(async (req, res, next) => {
+  catchThread(async (req, res) => {
     // To allow for nested routes
     let filter = {};
     if (req.params.tourId) filter = { tour: req.params.tourId };
 
     // BUILD THE QUERY
-    const features = new APIFeatures(Model.find(filter), req.query)
+    const features = new ApEzFeature(Model.find(filter), req.query)
       .filter()
       .sort()
       .limitFields()
-      .pageinate();
+      .paginate();
 
     // EXECUTE QUERY
     const doc = await features.dbQuery;
@@ -21,7 +25,7 @@ exports.getAll = (Model) =>
 
 //* GET ONE
 exports.getOne = (Model, popOptions) =>
-  catchAsync(async (req, res, next) => {
+  catchThread(async (req, res, next) => {
     let query = Model.findById(req.params.id);
     if (popOptions) query = query.populate('reviews');
     const doc = await query;
@@ -34,14 +38,14 @@ exports.getOne = (Model, popOptions) =>
 
 // *CREATE ONE
 exports.createOne = (Model) =>
-  catchAsync(async (req, res, next) => {
+  catchThread(async (req, res) => {
     const doc = await Model.create(req.body);
     res.status(201).json({ status: 'success', data: doc });
   });
 
 // *UPDATE ONE
 exports.updateOne = (Model) =>
-  catchAsync(async (req, res, next) => {
+  catchThread(async (req, res) => {
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
       new: true, //Return the new document
       runValidators: true, //Validate that input values are of correct type
@@ -56,7 +60,7 @@ exports.updateOne = (Model) =>
 
 // *DELETE ONE - HANDLER FACTORY
 exports.deleteOne = (Model) =>
-  catchAsync(async (req, res, next) => {
+  catchThread(async (req, res) => {
     const doc = await Model.findByIdAndDelete(req.params.id);
 
     if (!doc) {

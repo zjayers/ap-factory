@@ -1,6 +1,6 @@
-const catchThread = require('catch-thread');
-const AppError = require('ap-err');
-const ApEzFeature = require('ap-ez');
+const catchThread = require("catch-thread");
+const AppError = require("ap-err");
+const ApEzFeature = require("ap-ez");
 
 //* GET ALL
 exports.getAll = (Model) =>
@@ -20,27 +20,27 @@ exports.getAll = (Model) =>
     const doc = await features.dbQuery;
 
     //SEND RESPONSE TO USER
-    res.status(200).json({ status: 'success', results: doc.length, data: doc });
+    res.status(200).json({ status: "success", results: doc.length, data: doc });
   });
 
 //* GET ONE
 exports.getOne = (Model, popOptions) =>
   catchThread(async (req, res, next) => {
     let query = Model.findById(req.params.id);
-    if (popOptions) query = query.populate('reviews');
+    if (popOptions) query = query.populate("reviews");
     const doc = await query;
     if (!doc) {
-      return next(new AppError('No document found with that ID', 404));
+      return next(new AppError("No document found with that ID", 404));
     }
 
-    res.status(200).json({ status: 'success', data: doc });
+    res.status(200).json({ status: "success", data: doc });
   });
 
 // *CREATE ONE
 exports.createOne = (Model) =>
   catchThread(async (req, res) => {
     const doc = await Model.create(req.body);
-    res.status(201).json({ status: 'success', data: doc });
+    res.status(201).json({ status: "success", data: doc });
   });
 
 // *UPDATE ONE
@@ -52,10 +52,10 @@ exports.updateOne = (Model) =>
     });
 
     if (!doc) {
-      throw new AppError('No document found with that ID', 404);
+      throw new AppError("No document found with that ID", 404);
     }
 
-    res.status(200).json({ status: 'success', data: { doc } });
+    res.status(200).json({ status: "success", data: { doc } });
   });
 
 // *DELETE ONE - HANDLER FACTORY
@@ -64,11 +64,11 @@ exports.deleteOne = (Model) =>
     const doc = await Model.findByIdAndDelete(req.params.id);
 
     if (!doc) {
-      throw new AppError('No document found with that ID', 404);
+      throw new AppError("No document found with that ID", 404);
     }
 
     res.status(204).json({
-      status: 'success',
+      status: "success",
       data: null,
     });
   });

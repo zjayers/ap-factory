@@ -2,21 +2,21 @@
   "name": "ap-factory",
   "version": "1.0.0",
   "description": "",
-  "main": "apFactory.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "keywords": [],
+  "homepage": "https://github.com/zjayers/ap-factory#readme",
+  "bugs": {
+    "url": "https://github.com/zjayers/ap-factory/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zjayers/ap-factory.git"
   },
-  "keywords": [],
-  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/zjayers/ap-factory/issues"
+  "author": "",
+  "main": "apFactory.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "homepage": "https://github.com/zjayers/ap-factory#readme",
   "dependencies": {
     "ap-err": "^1.0.0",
     "ap-ez": "^1.0.0",
